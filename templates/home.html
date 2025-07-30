@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f7f6;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .navbar-brand {
+            color: #007bff;
+        }
+        .logout-btn {
+            color: white;
+            background-color: #ff4d4d;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .logout-btn:hover {
+            background-color: #e60000;
+        }
+        .feature-section {
+            background-color: #ffffff;
+            padding: 40px 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .feature-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .feature-description {
+            color: #555;
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .feature-img {
+            width: 100%;
+            height: auto;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        .feature-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .feature-card {
+            text-align: center;
+            max-width: 300px;
+            margin: 10px;
+        }
+        .feature-card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .feature-card h4 {
+            margin-top: 15px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar with Logout Option -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Welcome, {{ username }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('pitch_zone') }}">Pitch Ideas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('investor_zone') }}">Investors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('stock_market') }}">Stock Market</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">
+                        <button class="logout-btn">Logout</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content of the Home Page -->
+    <div class="container">
+        <h2 class="text-center">Welcome to Pitch Zone</h2>
+        <div class="text-center">
+            <p>Click below to submit your ideas, view investors, or explore stock market predictions.</p>
+            <a href="{{ url_for('pitch_zone') }}" class="btn btn-primary btn-lg">Submit Your Pitch</a>
+            <a href="{{ url_for('investor_zone') }}" class="btn btn-success btn-lg">Explore Investors</a>
+            <a href="{{ url_for('stock_market') }}" class="btn btn-info btn-lg">Stock Market</a>
+        </div>
+    </div>
+
+    <!-- App Features Section -->
+    <div class="feature-section">
+        <h3 class="feature-title">Unlock Your Entrepreneurial Potential</h3>
+        <p class="feature-description">
+            At Pitch Zone, we believe in empowering entrepreneurs by connecting them with the right investors. Whether you're a startup looking for funding, an investor searching for fresh ideas, or someone exploring the dynamic world of stock markets, Pitch Zone is here to facilitate growth, innovation, and opportunity.
+        </p>
+        <div class="feature-row">
+            <div class="feature-card">
+                <img src="{{ url_for('static', filename='imagesfolder/pitchs.jpg') }}"  alt="Pitch Ideas" class="feature-img">
+                <h4>Submit Your Ideas</h4>
+                <p>Pitch your business ideas to potential investors and get the funding you need to turn your vision into reality.</p>
+            </div>
+            <div class="feature-card">
+                <img src="{{ url_for('static', filename='imagesfolder/invest.jpg') }}" alt="Explore Investors" class="feature-img">
+                <h4>Explore Investors</h4>
+                <p>Connect with investors who are passionate about innovative business concepts and ready to help you succeed.</p>
+            </div>
+            <div class="feature-card">
+                <img src="{{ url_for('static', filename='imagesfolder/stocks.jpg') }}" alt="Stock Market Insights" class="feature-img">
+                <h4>Stock Market Insights</h4>
+                <p>Access real-time stock market insights and predictions to make informed investment decisions and grow your wealth.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pitchzone</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #007BFF;
+            display: inline-block;
+        }
+
+        .profile-card, .pitch-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+            padding: 20px;
+        }
+
+        .profile-card img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-info h3 {
+            color: #007BFF;
+            margin: 0;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+        }
+
+        .ratings {
+            margin: 5px 0;
+            color: #FFD700;
+        }
+
+        button {
+            background: #007BFF; /* Blue background for all buttons */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3; /* Darker blue on hover */
+        }
+
+        .follow-btn {
+            margin-left: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #007BFF;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .home-btn {
+            display: inline-block;
+            margin: 20px 0;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .home-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pitchzone</h1>
+    </header>
+    <div class="container">
+        <!-- Investor Profiles -->
+        <h2 class="section-title">Investor Profiles</h2>
+        <div class="profile-card">
+            <img src="{{ url_for('static', filename='imagesfolder/image1.jpg') }}" alt="Investor Photo">
+            <div class="profile-info">
+                <h3>John Smith</h3>
+                <p>CEO of Startup Ventures</p>
+                <p>Email: john.smith@example.com</p>
+                <p>Investments: $1M+</p>
+                <p>John is an experienced venture capitalist with a focus on early-stage startups.</p>
+                <p>He specializes in technology and green energy sectors.</p>
+                <div class="ratings">⭐ ⭐ ⭐ ⭐ ⭐</div>
+                <button class="follow-btn" onclick="toggleFollow(this, 'John Smith')">Follow</button>
+            </div>
+        </div>
+        <div class="profile-card">
+            <img src="{{ url_for('static', filename='imagesfolder/image2.jpg') }}" alt="Investor Photo">
+            <div class="profile-info">
+                <h3>Emily Johnson</h3>
+                <p>Angel Investor & Mentor</p>
+                <p>Email: emily.johnson@example.com</p>
+                <p>Investments: $500K+</p>
+                <p>Emily has invested in over 50 startups and enjoys mentoring young entrepreneurs.</p>
+                <p>Her interests include health tech and sustainable businesses.</p>
+                <div class="ratings">⭐ ⭐ ⭐ ⭐ ½</div>
+                <button class="follow-btn" onclick="toggleFollow(this, 'Emily Johnson')">Follow</button>
+            </div>
+        </div>
+
+        <!-- Available Pitches -->
+        <h2 class="section-title">Available Pitches</h2>
+        {% for pitch in pitch_ideas %}
+        <div class="pitch-card">
+            <div class="pitch-info">
+                <h3>{{ pitch.title }}</h3>
+                <p>{{ pitch.description }}</p>
+                <p><strong>Investment Needed:</strong> {{ pitch.investment_needed }}</p>
+            </div>
+            <div class="actions">
+                <button onclick="showForm('{{ pitch.title }}')">Invest</button>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Investment Form -->
+        <div class="investment-form" id="investmentForm">
+            <h2>Submit Your Investment</h2>
+            <p id="selectedPitch"></p>
+            <form action="{{ url_for('investor_zone') }}" method="POST">
+                <input type="hidden" id="pitchName" name="pitch_name" value="">
+                <label for="investorName">Investor Name:</label>
+                <input type="text" id="investorName" name="investor_name" placeholder="Enter your name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                
+                <label for="investmentAmount">Investment Amount:</label>
+                <input type="number" id="investmentAmount" name="investment_amount" placeholder="Enter amount" required>
+                
+                <button type="submit">Submit Investment</button>
+            </form>
+        </div>
+
+        <!-- Home Button -->
+        <a href="{{ url_for('home') }}" class="home-btn">Home</a>
+
+    </div>
+    <footer>
+        &copy; 2024 Pitchzone. All rights reserved.
+    </footer>
+
+    <script>
+        // Show Investment Form
+        function showForm(pitchName) {
+            document.getElementById('investmentForm').style.display = 'block';
+            document.getElementById('selectedPitch').textContent = "Selected Pitch: " + pitchName;
+            document.getElementById('pitchName').value = pitchName;
+        }
+
+        // Toggle Follow Button
+        function toggleFollow(button, investorName) {
+            if (button.textContent === "Follow") {
+                button.textContent = "Following";
+                alert(`You are now following ${investorName}`);
+            } else {
+                button.textContent = "Follow";
+                alert(`You unfollowed ${investorName}`);
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
